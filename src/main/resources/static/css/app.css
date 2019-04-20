@@ -1,0 +1,76 @@
+.online-dot {
+    height: 20px;
+    width: 20px;
+    background-color: #15ed15;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.offline-dot {
+    height: 20px;
+    width: 20px;
+    background-color: lightgrey;
+    border: 1px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+
+.generic-container {
+    width: 97%;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f4f2f2;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 0 20px grey;
+}
+
+.mb-4 {
+    text-align: center;
+}
+
+.buttons {
+    margin-right: 30px;
+}
+
+.info-message {
+    background-color: lightcyan;
+    font-weight: bold;
+    font-size: larger;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    height: 50%;
+}
+
+.move-to-bottom {
+    position: absolute;
+    bottom: 5%;
+    width: 100%;
+}
+
+.request-name {
+    font-weight: bold;
+    font-size: larger;
+}
+
+.request-footer {
+    padding-top: 15px;
+}
+
+.resp {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.prev-resp {
+    text-decoration: underline;
+}
+
+.index {
+    padding-right: 5px;
+    font-size: small;
+}

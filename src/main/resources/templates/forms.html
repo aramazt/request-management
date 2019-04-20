@@ -1,0 +1,62 @@
+<div class="row">
+    <!--=================USER FORM=========================-->
+    <div class="col">
+        <p class="h4 mb-4">Create User</p>
+        <form name="userForm" ng-submit="ctrl.createUser(userForm)" novalidate>
+
+            <div class="form-group">
+                <label>User name:</label>
+                <input name="fullname" type="text" class="form-control" ng-model="ctrl.newUser.fullname" required ng-maxlength="20"/>
+                <p ng-show="userForm.fullname.$dirty && userForm.fullname.$error.required" class="text-danger">User name is required.</p>
+                <p ng-show="userForm.fullname.$error.maxlength" class="text-danger">User name is too long.</p>
+            </div>
+
+            <div class="form-group">
+                <label>User login:</label>
+                <input name="login" type="text" class="form-control" ng-model="ctrl.newUser.login" required ng-maxlength="10"/>
+                <p ng-show="userForm.login.$dirty && userForm.login.$error.required" class="text-danger">User login is required.</p>
+                <p ng-show="userForm.login.$error.maxlength" class="text-danger">User login is too long.</p>
+            </div>
+
+            <div class="form-group">
+                <label>User status:</label>
+                <select name="userStatus" class="form-control" ng-model="ctrl.newUser.status" required>
+                    <option value="ONLINE">Online</option>
+                    <option value="OFFLINE">Offline</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Save</button>
+        </form>
+    </div>
+    <!--=================REQUEST FORM=========================-->
+    <div class="col">
+        <p class="h4 mb-4">Create Request</p>
+        <form name="requestForm" ng-submit="ctrl.createRequest(requestForm)" novalidate>
+            <div class="form-group">
+                <label>Request name:</label>
+                <input name="name" type="text" class="form-control" ng-model="ctrl.newRequest.name"
+                       required ng-maxlength="20"/>
+                <p ng-show="requestForm.name.$dirty && requestForm.name.$error.required" class="text-danger">Request name is required.</p>
+                <p ng-show="requestForm.name.$error.maxlength" class="text-danger">Request name is too long.</p>
+            </div>
+
+            <div class="form-group">
+                <label>Request description:</label>
+                <textarea class="form-control" rows="3" cols="50" name="description" style="resize: none"
+                          ng-model="ctrl.newRequest.description" required ng-maxlength="500">
+                                </textarea>
+                <p ng-show="requestForm.description.$dirty && requestForm.description.$error.required" class="text-danger">Request description is required.</p>
+                <p ng-show="requestForm.description.$error.maxlength" class="text-danger">Request description is too long.</p>
+            </div>
+
+            <div class="form-group">
+                <label>Responsible user:</label>
+                <select class="form-control" ng-model="ctrl.newRequest.responsibleId" required
+                        ng-options="u.id as u.fullname for u in ctrl.users">
+                </select>
+            </div>
+
+            <button class="btn btn-primary"  ng-disabled="requestForm.$invalid">Save</button>
+        </form>
+    </div>
+</div>
