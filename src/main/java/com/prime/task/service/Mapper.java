@@ -2,10 +2,8 @@ package com.prime.task.service;
 
 import com.prime.task.model.Request;
 import com.prime.task.model.User;
-import com.prime.task.repository.RequestRepository;
-import com.prime.task.repository.UserRepository;
-import com.prime.task.viewModel.RequestViewModel;
-import com.prime.task.viewModel.UserViewModel;
+import com.prime.task.view.model.RequestViewModel;
+import com.prime.task.view.model.UserViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +14,10 @@ import org.springframework.stereotype.Component;
 public class Mapper {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    private RequestRepository requestRepository;
+    private RequestService requestService;
 
     public User getUserFrom(UserViewModel viewModel) {
 
@@ -29,7 +27,7 @@ public class Mapper {
             user = new User(viewModel.login, viewModel.fullname, viewModel.status);
         } else {
             // on update operation
-            user = userRepository.findById(viewModel.id).get();
+            user = userService.getUser(viewModel.id);
             user.setFullname(viewModel.fullname);
             user.setLogin(viewModel.login);
             user.setStatus(viewModel.status);
@@ -43,12 +41,12 @@ public class Mapper {
         Request request;
         if (viewModel.id == null) {
             // on create operation
-            User responsible = userRepository.findById(viewModel.responsibleId).get();
+            User responsible = userService.getUser(viewModel.responsibleId);
             request = new Request(viewModel.name, viewModel.description, responsible);
 
         } else {
             // on update operation
-            request = requestRepository.findById(viewModel.id).get();
+            request = requestService.getRequest(viewModel.id);
             request.setName(viewModel.name);
             request.setDescription(viewModel.description);
             request.setStatus(viewModel.status);

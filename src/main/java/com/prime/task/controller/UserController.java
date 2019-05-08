@@ -1,12 +1,11 @@
 package com.prime.task.controller;
 
-import com.prime.task.model.Request;
 import com.prime.task.model.User;
-import com.prime.task.repository.UserRepository;
 import com.prime.task.service.Mapper;
-import com.prime.task.service.RequestManagement;
+import com.prime.task.service.automation.RequestManagement;
+import com.prime.task.service.UserService;
 import com.prime.task.utils.UserStatus;
-import com.prime.task.viewModel.UserViewModel;
+import com.prime.task.view.model.UserViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private RequestManagement requestManagement;
@@ -30,12 +29,12 @@ public class UserController {
 
     @GetMapping
     List<User> getUsers() {
-        return userRepository.findAll();
+        return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
     User getUser(@PathVariable Long id) {
-        return userRepository.getOne(id);
+        return userService.getUser(id);
     }
 
     @PostMapping("/create")
@@ -46,7 +45,7 @@ public class UserController {
 
         User user = mapper.getUserFrom(viewModel);
 
-        userRepository.save(user);
+        userService.save(user);
 
         return user;
     }
@@ -59,7 +58,7 @@ public class UserController {
 
         User updatedUser = mapper.getUserFrom(viewModel);
 
-        userRepository.save(updatedUser);
+        userService.save(updatedUser);
 
         // user goes OFFLINE
         if (updatedUser.getStatus().equals(UserStatus.OFFLINE)) {
@@ -71,13 +70,13 @@ public class UserController {
 
     @DeleteMapping("/delete/{id}")
     void deleteUser(@PathVariable Long id) {
-        User user = userRepository.findById(id).get();
+        User user = userService.getUser(id);
 
         requestManagement.deleteCompletedRequests(user);
 
         requestManagement.distributeOpenedRequestsOf(user);
 
-        userRepository.deleteById(id);
+        userService.deleteById(id);
     }
 
 }

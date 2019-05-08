@@ -1,4 +1,4 @@
-package com.prime.task.viewModel;
+package com.prime.task.view.model;
 
 import com.prime.task.utils.UserStatus;
 

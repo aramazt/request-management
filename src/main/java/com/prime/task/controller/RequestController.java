@@ -1,10 +1,10 @@
 package com.prime.task.controller;
 
 import com.prime.task.model.Request;
-import com.prime.task.repository.RequestRepository;
 import com.prime.task.service.Mapper;
+import com.prime.task.service.RequestService;
 import com.prime.task.utils.RequestStatus;
-import com.prime.task.viewModel.RequestViewModel;
+import com.prime.task.view.model.RequestViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ import java.util.List;
 public class RequestController {
 
     @Autowired
-    private RequestRepository requestRepository;
+    private RequestService requestService;
 
     @Autowired
     private Mapper mapper;
@@ -26,15 +26,15 @@ public class RequestController {
     @GetMapping
     List<Request> getAll(@RequestParam RequestStatus status) {
         if (status != null)
-            return requestRepository.findAllByStatus(status);
+            return requestService.getAllByStatus(status);
 
-        return requestRepository.findAll();
+        return requestService.getAllRequests();
     }
 
     @GetMapping("/forUser/{id}")
     List<Request> getRequestsForUser(@PathVariable Long id) {
 
-        return requestRepository.findAllByResponsibleId(id);
+        return requestService.getRequestsByResponsibleId(id);
     }
 
     @PostMapping("/save")
@@ -45,7 +45,7 @@ public class RequestController {
 
         Request request = mapper.getRequestFrom(viewModel);
 
-        requestRepository.save(request);
+        requestService.save(request);
 
         return request;
     }
@@ -53,8 +53,8 @@ public class RequestController {
     @DeleteMapping("/delete/{id}")
     void delete(@PathVariable Long id) {
 
-        Request request = requestRepository.findById(id).get();
+        Request request = requestService.getRequest(id);
 
-        requestRepository.delete(request);
+        requestService.delete(request);
     }
 }

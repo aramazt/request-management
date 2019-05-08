@@ -1,9 +1,9 @@
-package com.prime.task.service;
+package com.prime.task.service.automation;
 
 import com.prime.task.model.Request;
 import com.prime.task.model.User;
-import com.prime.task.repository.RequestRepository;
-import com.prime.task.repository.UserRepository;
+import com.prime.task.service.RequestService;
+import com.prime.task.service.UserService;
 import com.prime.task.utils.RequestStatus;
 import com.prime.task.utils.UserStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,10 @@ import java.util.List;
 public class RequestManagement {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    private RequestRepository requestRepository;
+    private RequestService requestService;
 
     /**
      * This method distributes all opened requests of certain User who changed his status
@@ -26,10 +26,10 @@ public class RequestManagement {
      * Also this method will work on user DELETE operation
      */
     public void distributeOpenedRequestsOf(User user) {
-        List<Request> allRequestsOfUser = requestRepository.findAllByResponsible(user);
+        List<Request> allRequestsOfUser = requestService.getRequestsByResponsible(user);
         if (allRequestsOfUser.size() == 0) return;
 
-        List<User> allOnlineUsers = userRepository.findAllByStatus(UserStatus.ONLINE);
+        List<User> allOnlineUsers = userService.getUsersByStatus(UserStatus.ONLINE);
         allOnlineUsers.remove(user);
 
         for (Request r : allRequestsOfUser) {
@@ -60,18 +60,18 @@ public class RequestManagement {
             request.setPrevResponsible(previousUser.getLogin());
             request.setResponsible(candidate);
             candidate.getRequests().add(request);
-            userRepository.save(candidate);
+            userService.save(candidate);
         }
 
     }
 
 
     public void deleteCompletedRequests(User user) {
-        List<Request> allRequests = requestRepository.findAllByResponsible(user);
+        List<Request> allRequests = requestService.getRequestsByResponsible(user);
 
         for (Request request : allRequests) {
             if (!request.getStatus().equals(RequestStatus.OPEN)){
-                requestRepository.deleteById(request.getId());
+                requestService.deleteById(request.getId());
             }
         }
     }
