@@ -5,9 +5,17 @@ import com.prime.task.model.User;
 import com.prime.task.utils.UserStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
+/**
+ * This component will only execute (and get instantiated) if the
+ * property [database.recreate] is set to true in the
+ * application.properties file
+ */
+
 @Component
+@ConditionalOnProperty(name = "database.recreate", havingValue = "true")
 public class OnStart implements CommandLineRunner {
 
     @Autowired

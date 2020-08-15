@@ -1,6 +1,5 @@
 package com.prime.task.service;
 
-
 import com.prime.task.model.Request;
 import com.prime.task.model.User;
 import com.prime.task.repository.RequestRepository;
@@ -13,13 +12,15 @@ import java.util.List;
 @Service
 public class RequestService {
 
-    @Autowired
-    RequestRepository repository;
+    private final RequestRepository repository;
 
+    @Autowired
+    public RequestService(RequestRepository repository) {
+        this.repository = repository;
+    }
 
     public Request getRequest(Long id) {
-        if (id == null)
-            return null;
+        if (id == null) return null;
 
         return repository.findById(id).get();
     }
