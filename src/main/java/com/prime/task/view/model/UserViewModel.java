@@ -22,4 +22,11 @@ public class UserViewModel {
 
     @NotNull
     public UserStatus status;
+
+    public UserViewModel(Long id, String fullname, String login, UserStatus status) {
+        this.id = id;
+        this.fullname = fullname;
+        this.login = login;
+        this.status = status;
+    }
 }
