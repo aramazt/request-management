@@ -12,6 +12,7 @@
     <artifactId>request-management</artifactId>
     <version>0.0.1</version>
     <name>request-management</name>
+    <packaging>jar</packaging>
 
 
     <properties>
@@ -40,6 +41,18 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
+        </dependency>
+
+        <!-- Testing suite -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.4.0</version>
         </dependency>
 
         <!-- Frontend libraries -->
