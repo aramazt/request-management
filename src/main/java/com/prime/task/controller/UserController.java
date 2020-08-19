@@ -7,6 +7,7 @@ import com.prime.task.service.UserService;
 import com.prime.task.utils.UserStatus;
 import com.prime.task.view.model.UserViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +39,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
+    @ResponseStatus(HttpStatus.CREATED)
     User createUser(@RequestBody @Valid UserViewModel viewModel, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationException("Invalid request data");
