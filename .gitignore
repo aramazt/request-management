@@ -2,5 +2,5 @@
 .directory
 /target
 *.iml
-.mv.db
-.trace.db
+*.mv.db
+*.trace.db
